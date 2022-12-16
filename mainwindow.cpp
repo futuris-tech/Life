@@ -6,20 +6,14 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     timer(this),
     field(this),
-    button(this)
+    button(this),
+    c_button(this)
 {
     timer.setInterval(100);
     connect(&button, &Button::pause, &timer, &QTimer::stop);
     connect(&button, &Button::play, &timer, (void (QTimer::*)())&QTimer::start);
+    connect(&c_button, &ClearButton::clear, &field, &Field::clear);
     connect(&timer, &QTimer::timeout, &field, &Field::iteration);
-    /*std::default_random_engine dre;
-    field.data = new uchar[256*256];
-    for (int i = 0; i < 256*256; i++)
-        field.data[i] = dre() % 2;*/
-}
-
-MainWindow::~MainWindow()
-{
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event) {
@@ -29,7 +23,9 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     field.resize(l, l);
     int x = (size.width() - l) / 2;
     int y = (size.height() - l) / 2;
+    int ch = size.height() / 2;
     field.move(x, y);
-    button.move(x + l + 20, (size.height() - 100) / 2);
+    button.move(x + l + 20, ch - button.height());
+    c_button.move(x + l + 20, ch);
 }
 

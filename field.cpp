@@ -4,8 +4,9 @@
 #include <QDateTime>
 #include <random>
 
-inline const int Size = 256;
-inline const int Stride = Size + 2;
+const bool RandomInit = true;
+const int Size = 256;
+const int Stride = Size + 2;
 
 enum painter_color { Dead, Alive, DeadSel, AliveSel, TypeNum };
 class painter {
@@ -43,14 +44,23 @@ Field::Field(QWidget *parent) :
     memset(buffer0, 0, Stride * Stride);
     memset(buffer1, 0, Stride * Stride);
 
-    /*std::default_random_engine dre;
-    for (int y = 0; y < Size; y++)
-    for (int x = 0; x < Size; x++)
-        buffer0[Stride + y * Stride + 1 + x] = dre() % 2;*/
+    if constexpr (RandomInit) {
+        std::default_random_engine dre;
+        for (int y = 0; y < Size; y++)
+        for (int x = 0; x < Size; x++)
+            buffer0[Stride + y * Stride + 1 + x] = dre() % 2;
+    }
 }
 Field::~Field() {
     delete[] buffer0;
     delete[] buffer1;
+}
+
+void Field::clear() {
+    for (uint i = 0; i < Stride*Stride; i++)
+        buffer0[i] = 0;
+    pix.fill();
+    setPixmap(pix);
 }
 
 void Field::resizeEvent(QResizeEvent *event) {

@@ -16,9 +16,10 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
 	main.cpp
-	mainwindow.cpp
-	field.cpp
-	button.cpp
+	mainwindow.cpp	mainwindow.h
+	field.cpp		field.h
+	button.cpp		button.h
+	clearbutton.h	clearbutton.cpp
 	res.qrc
 )
 

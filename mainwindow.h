@@ -6,6 +6,7 @@
 #include <QTimer>
 #include "field.h"
 #include "button.h"
+#include "clearbutton.h"
 
 class MainWindow : public QMainWindow
 {
@@ -13,10 +14,9 @@ class MainWindow : public QMainWindow
     QTimer timer;
     Field field;
     Button button;
+    ClearButton c_button;
 public:
     MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
     void resizeEvent(QResizeEvent *event) override;
-
 };
 #endif // MAINWINDOW_H
